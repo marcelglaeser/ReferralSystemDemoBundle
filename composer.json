@@ -1,0 +1,27 @@
+{
+    "name": "venis/referral-system-demo-bundle",
+    "description": "Simple mini referral system",
+    "type": "symfony-bundle",
+    "keywords": ["user", "referral"],
+    "homepage": "https://github.com/VEnis/ReferralSystemDemoBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Vyacheslav Enis",
+            "email": "venis@difane.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.2",
+        "symfony/symfony": "2.1.*",
+        "doctrine/orm": ">=2.2.3,<2.4-dev",
+        "doctrine/doctrine-bundle": "dev-master",
+        "friendsofsymfony/user-bundle": "dev-master"
+    },
+    "suggest": {        
+    },
+    "autoload": {
+        "psr-0": { "VEnis\\Bundle\\ReferralSystemDemoBundle": "" }
+    },
+    "target-dir": "VEnis/Bundle/ReferralSystemDemoBundle"
+}
