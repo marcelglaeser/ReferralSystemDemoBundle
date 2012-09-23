@@ -6,6 +6,7 @@ use Symfony\Component\HttpKernel\Event\GetResponseEvent;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpKernel\HttpKernel;
+use FOS\UserBundle\Model\UserManagerInterface;
 
 class KernelEventListener
 {
@@ -39,18 +40,26 @@ class KernelEventListener
      */
     protected $referralRefererCookieParamName = "ref_referer";
 
+    /**
+     * UserManager instance, used to check referralCode validity     *
+     * @var UserManagerInterface
+     */
+    protected $userManager;
+
     function __construct(
         $referralCodeQueryParamName,
         $referralCodeCookieParamName,
         $referralIpAddressCookieParamName,
         $referralDateCookieParamName,
-        $referralRefererCookieParamName
+        $referralRefererCookieParamName,
+        UserManagerInterface $userManager
     ) {
         $this->referralCodeQueryParamName = $referralCodeQueryParamName;
         $this->referralCodeCookieParamName = $referralCodeCookieParamName;
         $this->referralIpAddressCookieParamName = $referralIpAddressCookieParamName;
         $this->referralDateCookieParamName = $referralDateCookieParamName;
         $this->referralRefererCookieParamName = $referralRefererCookieParamName;
+        $this->userManager = $userManager;
     }
 
     /**
@@ -60,6 +69,7 @@ class KernelEventListener
     {
         if(HttpKernel::MASTER_REQUEST != $event->getRequestType())
         {
+            // SUB_REQUEST must be skipped. We are processing only MASTER_REQUEST
             return;
         }
 
@@ -69,6 +79,15 @@ class KernelEventListener
 
         if(is_null($referralCode))
         {
+            // If no referral code available in query - do nothing
+            return;
+        }
+
+        //TODO: It can be possible to implement more "light" referralCode checking without full user data retrieving on success
+        $parentUser = $this->userManager->findUserBy(array("referralCode" => $referralCode));
+        if(is_null($parentUser))
+        {
+            // If no user with passed referral code - do nothing
             return;
         }
 
