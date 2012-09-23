@@ -67,21 +67,22 @@ class RegistrationFormHandler extends BaseHandler
                 if(false == is_null($parentUser))
                 {
                     $user->setReferralUser($parentUser);
+
+                    // Setting referral IP
+                    $referralIpAddress = $this->request->cookies->get($this->referralIpAddressCookieParamName, "");
+                    $user->setReferralIpAddress($referralIpAddress);
+
+                    // Setting referral DateTime
+                    $referralDate = new \DateTime();
+                    $referralDate->setTimestamp($this->request->cookies->getInt($this->referralDateCookieParamName, 0));
+                    $user->setReferralDate($referralDate);
+
+                    // Setting referral referer
+                    $referralReferer = $this->request->cookies->get($this->referralRefererCookieParamName, "");
+                    $user->setReferralReferer($referralReferer);
                 }
             }
 
-            // Setting referral IP
-            $referralIpAddress = $this->request->cookies->get($this->referralIpAddressCookieParamName, "");
-            $user->setReferralIpAddress($referralIpAddress);
-
-            // Setting referral DateTime
-            $referralDate = new \DateTime();
-            $referralDate->setTimestamp($this->request->cookies->getInt($this->referralDateCookieParamName, 0));
-            $user->setReferralDate($referralDate);
-
-            // Setting referral referer
-            $referralReferer = $this->request->cookies->get($this->referralRefererCookieParamName, "");
-            $user->setReferralReferer($referralReferer);
         }
 
         parent::onSuccess($user, $confirmation);
