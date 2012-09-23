@@ -1,6 +1,8 @@
 ReferralSystemDemoBundle
 ========================
 
+Read the complete documentation [here](http://referralsystemdemobundle.readthedocs.org/en/latest/index.html).
+
 Мини реферальная система со следующими возможностями
 ----------------------------------------------------
 
