@@ -17,6 +17,18 @@
             <argument>%venis_referral_system_demo.listener.kernel.cookie_param_date%</argument>
             <argument>%venis_referral_system_demo.listener.kernel.cookie_param_referer%</argument>
         </service>
+
+        <service id="venis_referral_system_demo.form.handler.registration" class="VEnis\Bundle\ReferralSystemDemoBundle\Form\Handler\RegistrationFormHandler" scope="request" public="false">
+            <argument type="service" id="fos_user.registration.form" />
+            <argument type="service" id="request" />
+            <argument type="service" id="fos_user.user_manager" />
+            <argument type="service" id="fos_user.mailer" />
+            <argument type="service" id="fos_user.util.token_generator" />
+            <argument>%venis_referral_system_demo.listener.kernel.cookie_param_code%</argument>
+            <argument>%venis_referral_system_demo.listener.kernel.cookie_param_ip%</argument>
+            <argument>%venis_referral_system_demo.listener.kernel.cookie_param_date%</argument>
+            <argument>%venis_referral_system_demo.listener.kernel.cookie_param_referer%</argument>
+        </service>
     </services>
 
 </container>
