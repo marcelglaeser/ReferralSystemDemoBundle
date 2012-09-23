@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
+                  http://doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
+
+    <mapped-superclass name="VEnis\Bundle\ReferralSystemDemoBundle\Entity\User">
+
+        <field name="referralCode" column="referral_code" type="string" />
+        <field name="referralIpAddress" column="referral_ip_address" type="string" nullable="true" />
+        <field name="referralDate" column="referral_date" type="datetime" nullable="true" />
+        <field name="referralReferer" column="referral_referer" type="string" nullable="true" />
+
+        <lifecycle-callbacks>
+            <lifecycle-callback type="prePersist" method="initReferralData" />
+        </lifecycle-callbacks>
+    </mapped-superclass>
+
+</doctrine-mapping>
